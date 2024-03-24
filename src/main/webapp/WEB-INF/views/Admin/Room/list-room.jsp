@@ -29,7 +29,7 @@
                         <div class="text-end mb-4">
                             <c:url var="urlAddRoom" value="/them-phong"/>
                             <a href="${urlAddRoom}" class="btn btn-success rounded-pill shadow-none btn-sm">
-                               Thêm cơ sở vật chất
+                               Thêm Phòng
                             </a>
                         </div>
 

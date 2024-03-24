@@ -38,13 +38,13 @@
           <p>Hình ảnh</p>
           <form:input type="file" id="room-image" name="room-image" accept="image/*" path="pathImage"/>
 
-         <p>Giá phòng</p> <form:input path="pricePerNight"/>
+         <p>Giá phòng</p> <form:input type="number"  min="0" path="pricePerNight"/>
          <p style="color:red;"><form:errors path="pricePerNight"> </form:errors> </p>
 
-         <p>Số lượng</p> <form:input path="quantity"/>
+         <p>Số lượng</p> <form:input type="number"  min="0" path="quantity" />
          <p style="color:red;"><form:errors path="quantity"> </form:errors> </p>
 
-          <p>Diện tích</p> <form:input path="area"/>
+          <p>Diện tích</p> <form:input type="number" min="0" path="area"/>
           <p style="color:red;"><form:errors path="area"> </form:errors> </p>
 
          <p>Trạng thái</p>

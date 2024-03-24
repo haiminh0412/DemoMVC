@@ -5,7 +5,7 @@ import com.project_spring.Admin.Model.RoomType;
 import java.util.List;
 
 public interface IRoomTypeDao {
-    boolean addRoomType(RoomType roomType);
+    boolean addRoomType(RoomType roomType) throws Exception;
 
     boolean deleteRoomType(int roomTypeId);
 

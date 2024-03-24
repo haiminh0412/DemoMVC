@@ -6,7 +6,7 @@ import java.sql.Blob;
 import java.util.List;
 
 public interface IRoomDao {
-    boolean addRoom(Room room);
+    boolean addRoom(Room room) throws Exception;
 
     boolean deleteRoom(int roomId);
 
@@ -15,6 +15,8 @@ public interface IRoomDao {
     boolean isExistRoom(Room room);
 
     boolean findRoomByRoomType(int id);
+
+    boolean upadateStatus(Room room, String status);
 
     Room finhRoomById(int id);
 

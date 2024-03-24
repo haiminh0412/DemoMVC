@@ -1,21 +1,24 @@
 package com.project_spring.Admin.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.jpa.repository.Query;
 
-@Entity
-@Table(name="roomtype")
+import java.io.Serial;
+import java.io.Serializable;
+
 public class RoomType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomTypeId;
 
     @NotEmpty
-    @Column
     private String typeName;
 
     @NotEmpty
-    @Column
     private String description;
 
     public RoomType() {

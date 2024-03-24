@@ -50,7 +50,15 @@
                            <li class="nav-item">
                                 <c:url var="urlBooking" value="/danh-sach-dat-phong" />
                                 <a class="nav-link text-white" href="${urlBooking}">Danh sách đặt phòng</a>
-                            </li>
+                           </li>
+                           <li class="nav-item">
+                               <c:url var="urlRoomBook" value="/danh-sach-phong-co-nguoi-o" />
+                               <a class="nav-link text-white" href="${urlRoomBook}">Danh sách phòng đang có người ở</a>
+                          </li>
+                          <li class="nav-item">
+                              <c:url var="urlRoomBill" value="/danh-sach-hoa-don-phong" />
+                              <a class="nav-link text-white" href="${urlRoomBill}">Danh sách hóa đơn phòng</a>
+                          </li>
                         <!-- Các mục khác được chuyển đổi tương tự -->
                         <!-- ... -->
                         <li class="nav-item">

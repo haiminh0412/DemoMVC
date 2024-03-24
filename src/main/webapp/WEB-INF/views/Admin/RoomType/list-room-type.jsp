@@ -14,7 +14,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý khách sạn</title>
     <%@ include file="/WEB-INF/views/inc/links.jsp" %>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 </head>
+
+<script>
+const BASE_URL = 'http://localhost:8080/DemoMVC/list-room-type'
+
+// Sinh Vien
+const API_STUDENT_LIST = '/list-room-type'
+const API_STUDENT_ADD = '/api/student/add'
+const API_STUDENT_UPDATE = '/api/student/update'
+const API_STUDENT_DELETE = '/api/student/delete'
+
+</script>
+
+
 <body class="bg-white">
     <%@ include file="/WEB-INF/views/inc/header.jsp" %>
     <div class="container-fluid" id="main-content">

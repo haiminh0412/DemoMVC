@@ -22,6 +22,7 @@
     <h4>Thêm loại phòng</h4>
     <c:url value="/them-loai-phong" var="url"/>
     <form:form modelAttribute="roomType" method="post" action="${url}">
+        <path="roomTypeId"/>
         <p>Tên loại phòng</p> <form:input path="typeName" id="room-type" name="room-type"/>
         <p style="color:red;"><form:errors path="typeName"> </form:errors> </p>
         <p>Mô tả</p> <form:input path="description" id="description" name="description"/>

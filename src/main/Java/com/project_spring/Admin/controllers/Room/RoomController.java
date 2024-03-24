@@ -6,6 +6,7 @@ import com.project_spring.Admin.Model.Room;
 import com.project_spring.Admin.Model.RoomType;
 import com.project_spring.Admin.Service.Room.RoomService;
 import com.project_spring.Admin.Service.RoomType.RoomTypeService;
+import com.project_spring.Admin.Validator.RoomValidator;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class RoomController {
 
     @Autowired
     RoomTypeService roomTypeService;
+
+    @Autowired
+    RoomValidator roomValidator;
 
     @RequestMapping(value = "/danh-sach-phong", method = RequestMethod.GET)
     public String displayAllRooms(HttpServletRequest httpServletRequest) {
@@ -58,7 +62,8 @@ public class RoomController {
 
     @RequestMapping(value = "/them-phong", method = RequestMethod.POST)
     public String addRoom(HttpServletRequest httpServletRequest, @ModelAttribute("room") @Valid Room room,
-                                BindingResult bindingResult) {
+                                BindingResult bindingResult) throws Exception {
+        roomValidator.validate(room, bindingResult);
         if(bindingResult.hasErrors()) {
             return "Admin/Room/add-room";
         }
@@ -98,4 +103,6 @@ public class RoomController {
         boolean result = roomService.updateRoom(room);
         return "redirect:/danh-sach-phong";
     }
+
+
 }

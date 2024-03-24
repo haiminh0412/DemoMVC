@@ -57,4 +57,15 @@ public class Customer {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender='" + gender + '\'' +
+                '}';
+    }
 }

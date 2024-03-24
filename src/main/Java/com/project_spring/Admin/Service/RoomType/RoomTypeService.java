@@ -2,8 +2,10 @@ package com.project_spring.Admin.Service.RoomType;
 
 import com.project_spring.Admin.DAO.RoomType.RoomTypeDao;
 import com.project_spring.Admin.Model.RoomType;
+import com.project_spring.Admin.Repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

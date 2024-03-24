@@ -14,7 +14,7 @@ public class RoomService implements IRoomService{
     RoomDao roomDao;
 
     @Override
-    public boolean addRoom(Room room) {
+    public boolean addRoom(Room room) throws Exception {
         return roomDao.addRoom(room);
     }
 
@@ -31,6 +31,11 @@ public class RoomService implements IRoomService{
     @Override
     public boolean findRoomByRoomType(int id) {
         return roomDao.findRoomByRoomType(id);
+    }
+
+    @Override
+    public boolean upadateStatus(Room room, String status) {
+        return roomDao.upadateStatus(room, status);
     }
 
     @Override

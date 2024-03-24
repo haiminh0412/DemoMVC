@@ -30,6 +30,11 @@
                             <a href="${urlBookingRoom}" class="btn btn-success rounded-pill shadow-none btn-sm">
                                Thêm mới
                             </a>
+
+                             <c:url var="urlCheckIn" value="/nhan-phong"/>
+                      `          <a href="urlCheckIn" class="btn btn-sm rounded-pill btn btn-danger">
+                                    Nhận phòng
+                                </a>`
                         </div>
 
                         <div class="table-responsive-md" style="height: 450px; overflow-y: scroll; overflow-x:scroll;">
@@ -44,30 +49,27 @@
                                     <th class="wide-column">Check-in</th>
                                     <th class="wide-column">Check-out</th>
                                     <th class="wide-column">Yêu cầu</th>
-                                    <th class="wide-column">Tổng tiền phải trả</th>
+                                    <th class="wide-column">Tổng tiền</th>
                                     <th class="wide-column">Trạng thái</th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     </tr>
                                 </thead>
-                                   <c:forEach var="room" items="${rooms}">
+                                   <c:forEach var="booking" items="${bookings}">
                                         <tr>
-                                            <td>${room.roomId}</td>
-                                            <td>${room.roomName}</td>
-                                            <td>${room.roomType.typeName}</td>
-                                             <td>
-                                                <c:set var="imageRoom" value="${roomMap[room.roomId]}" />
-                                                <img src="data:image/png;base64,${imageRoom}" alt="Image" style="width: 100px; height: 100px;">
-                                             </td>
-                                            <td>
-                                                 <fmt:formatNumber value = " ${room.pricePerNight}" type = "currency"/>
-                                            </td>
-                                            <td>${room.area}</td>
-                                            <td>${room.quantity}</td>
-                                            <td>${room.roomType.description}</td>
-                                            <td>${room.status}</td>
-                                            <th><a href="<c:url value='/xoa-phong/id=${room.roomId}'/>" class="btn btn-sm rounded-pill btn-danger" onclick="return confirmDelete();"/>Xóa</th>
-                                            <th><a href="<c:url value='/sua-phong/id=${room.roomId}'/>" class="btn btn-sm rounded-pill btn-primary"/>Sửa</th>
+                                            <td>${booking.bookingId}</td>
+                                            <td>${booking.customer.name}</td>
+                                            <td>${booking.room.roomName}</td>
+                                            <td>${booking.numberOfPeople}</td>
+                                            <td>${booking.checkIn}</td>
+                                            <td>${booking.checkOut}</td>
+                                            <td>${booking.requiredSpecial}</td>
+                                            <td>${booking.totalAmount}</td>
+                                            <td>${booking.paymentStatus}</td>
+                                            <th><a href="<c:url value='/xoa-dat-phong/id=${booking.bookingId}'/>" class="btn btn-sm rounded-pill btn-danger" onclick="return confirmDelete();"/>Xóa</th>
+                                            <th><a href="<c:url value='/sua-dat-phong/id=${booking.bookingId}'/>" class="btn btn-sm rounded-pill btn-primary"/>Sửa</th>
+                                            <th><a href="<c:url value='/nhan-phong-da-dat/id=${booking.bookingId}'/>" class="btn btn-sm rounded-pill btn btn-light" onclick="return confirmCheckIn();">Nhận phòng</a></th>
                                         </tr>
                                    </c:forEach>
                             </table>
@@ -78,14 +80,24 @@
 
    <script>
         function confirmDelete() {
-        var result = confirm('Cảnh Báo : Nếu bạn đồng ý xóa đồng nghĩa bạn sẽ xóa các phòng có loại phòng này!Bạn có đồng ý?');
-        if (result === true) {
-            window.location.href = "list-facilities.jsp";
-            return true;
-        } else {
-            return false;
+            var result = confirm('Bạn có chắc chắn muốn xóa không?');
+            if (result === true) {
+                window.location.href = "list-booking.jsp";
+                return true;
+            } else {
+                return false;
+            }
         }
-    }
+
+         function confirmCheckIn() {
+            var result = confirm('Bạn có chắc chắn muốn nhận phòng không?');
+            if (result === true) {
+                window.location.href = "occupied-room.jsp";
+                return true;
+            } else {
+                return false;
+            }
+         }
    </script>
 
     <%@ include file="/WEB-INF/views/inc/scripts.jsp" %>

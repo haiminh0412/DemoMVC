@@ -43,8 +43,9 @@ public class FacilitiesController {
     }
 
     @RequestMapping(value = "/them-co-so-vat-chat", method = RequestMethod.POST)
-    public String addFacilities(HttpServletRequest httpServletRequest, @ModelAttribute("facilities") @Valid Facilities facilities,
-                                    BindingResult bindingResult) {
+    public String addFacilities(HttpServletRequest httpServletRequest,
+                                @ModelAttribute("facilities") @Valid Facilities facilities,
+                                BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return "Admin/Facilities/add-facilities";
         }

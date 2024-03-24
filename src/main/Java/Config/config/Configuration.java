@@ -1,7 +1,10 @@
 package Config.config;
 
-import com.mysql.cj.xdevapi.SessionFactory;
+import com.project_spring.Admin.Validator.RoomTypeValidator;
+import com.project_spring.Admin.Validator.RoomValidator;
+import jakarta.persistence.EntityManagerFactory;
 import jdk.jfr.Enabled;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -9,11 +12,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.convert.Property;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.SessionFactoryUtils;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -25,7 +35,7 @@ import java.util.Properties;
 
 @org.springframework.context.annotation.Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.project_spring.Admin")
+@ComponentScan(basePackages = "com.project_spring")
 @EnableTransactionManagement
 public class Configuration implements WebMvcConfigurer {
     @Autowired
@@ -64,26 +74,71 @@ public class Configuration implements WebMvcConfigurer {
         return new JdbcTemplate(dataSource());
     }
 
+    @Bean
+    public LocalSessionFactoryBean sessionFactoryBean() {
+        LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
+        bean.setDataSource(dataSource());
+        bean.setPackagesToScan("com.project_spring.Admin.Model");
+
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.put("hibernate.show_sql", true);
+
+        bean.setHibernateProperties(properties);
+        return bean;
+    }
+
+    @Bean(name = "transactionManager")
+    @Autowired
+    public HibernateTransactionManager hibernateTransactionManager(SessionFactory sessionFactory) {
+        HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager();
+        hibernateTransactionManager.setSessionFactory(sessionFactory);
+        return hibernateTransactionManager;
+    }
+
+    @Bean
+    public RoomTypeValidator roomTypeValidator() {
+        return new RoomTypeValidator();
+    }
+
+    @Bean
+    public RoomValidator roomValidator() {
+        return new RoomValidator();
+    }
+
+//    @Bean(name = "transactionManager")
+//    public DataSourceTransactionManager dataSourceTransactionManager() {
+//        return new DataSourceTransactionManager(dataSource());
+//    }
+
 //    @Bean
-//    public LocalSessionFactoryBean localSessionFactoryBean() {
-//        LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
-//        bean.setDataSource(dataSource());
-//        bean.setPackagesToScan("com.project_spring.Admin");
-//
-//        Properties properties = new Properties();
-//        properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
-//        properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
-//
-//        bean.setHibernateProperties(properties);
-//        return bean;
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//        em.setDataSource(dataSource());
+//        em.setPersistenceUnitName("persistence-data");
+//        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+//        em.setJpaVendorAdapter(vendorAdapter);
+//        em.setJpaProperties(additionalProperties());
+//        return em;
 //    }
 //
-//    @Bean(name = "transactionManager")
-//    @Autowired
-//    public HibernateTransactionManager hibernateTransactionManager(Session sessionFactory) {
-//        HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager();
-//        hibernateTransactionManager.setSessionFactory(sessionFactory);
-//        return hibernateTransactionManager;
+//    @Bean
+//    JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+//        JpaTransactionManager transactionManager = new JpaTransactionManager();
+//        transactionManager.setEntityManagerFactory(entityManagerFactory);
+//        return transactionManager;
+//    }
+//
+//    @Bean
+//    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+//        return new PersistenceExceptionTranslationPostProcessor();
+//    }
+//
+//    Properties additionalProperties() {
+//        Properties properties = new Properties();
+//        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+//        //properties.setProperty("hibernate.hbm2ddl.auto", "none");
+//        return properties;
 //    }
 
     @Override

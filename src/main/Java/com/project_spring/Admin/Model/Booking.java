@@ -1,6 +1,7 @@
 package com.project_spring.Admin.Model;
 
 import java.sql.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Booking {
     private int bookingId;
@@ -12,14 +13,14 @@ public class Booking {
     private Date checkOut;
     private int numberOfPeople;
     private String requiredSpecial;
-    private String totalAmount;
-    private String status;
+    private double totalAmount;
+    private int status = 0;
     private String PaymentStatus;
 
     public Booking() {
     }
 
-    public Booking(int bookingId, int customerId, Customer customer, int roomId, Room room, Date checkIn, Date checkOut, int numberOfPeople, String requiredSpecial, String totalAmount, String status, String paymentStatus) {
+    public Booking(int bookingId, int customerId, Customer customer, int roomId, Room room, Date checkIn, Date checkOut, int numberOfPeople, String requiredSpecial, double totalAmount, int status, String paymentStatus) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.customer = customer;
@@ -106,19 +107,21 @@ public class Booking {
         this.requiredSpecial = requiredSpecial;
     }
 
-    public String getTotalAmount() {
-        return totalAmount;
+    public double getTotalAmount() {
+        long diffInMillies = Math.abs(checkOut.getTime() - checkIn.getTime());
+        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        return ++diff * room.getPricePerNight();
     }
 
-    public void setTotalAmount(String totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

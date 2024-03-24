@@ -1,7 +1,7 @@
 package com.project_spring.Admin.controllers.User;
 
 import com.project_spring.Admin.Model.User;
-import com.project_spring.Admin.Service.Room.User.UserDao;
+import com.project_spring.Admin.Service.User.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

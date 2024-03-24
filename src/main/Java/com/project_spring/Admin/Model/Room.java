@@ -1,14 +1,32 @@
 package com.project_spring.Admin.Model;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.context.annotation.Bean;
+import org.springframework.format.annotation.NumberFormat;
 
 public class Room {
     private int roomId;
+
+    @NotEmpty
+    @Length(min = 0, max = 100)
     private String roomName;
+
+    @NotNull
     private RoomType roomType;
+
+    @NotNull
     private byte[] image;
+
+    @Min(0)
     private double pricePerNight;
+    @Min(0)
     private double area;
+
+    @Min(1)
     private int quantity;
     private String status;
     private int roomTypeId;
