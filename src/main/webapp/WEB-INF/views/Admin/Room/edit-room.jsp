@@ -27,7 +27,7 @@
          <p>Tên phòng</p> <form:input path="roomName"/>
          <p style="color:red;"><form:errors path="roomName"> </form:errors> </p>
 
-         <p>Loại cơ sở vật chất</p>
+         <p>Loại phòng</p>
              <form:select path="roomTypeId">
                 <c:forEach var="roomType" items="${roomTypes}">
                     <form:option value="${roomType.roomTypeId}">${roomType.typeName}</form:option>

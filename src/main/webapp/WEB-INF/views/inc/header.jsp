@@ -43,18 +43,30 @@
                              <c:url var="urlListFacilitiesType" value="/danh-sach-loai-co-so-vat-chat" />
                              <a class="nav-link text-white" href="${urlListFacilitiesType}">Quản lý loại cơ sở vật chất</a>
                          </li>
-                          <li class="nav-item">
+                         <li class="nav-item">
                               <c:url var="urlListFacilities" value="/danh-sach-co-so-vat-chat" />
                               <a class="nav-link text-white" href="${urlListFacilities}">Quản lý cơ sở vật chất</a>
-                          </li>
-                           <li class="nav-item">
+                         </li>
+                         <li class="nav-item">
+                               <c:url var="urlUnit" value="/danh-sach-loai-don-vi" />
+                               <a class="nav-link text-white" href="${urlUnit}">Danh sách loại đơn vị</a>
+                         </li>
+                         <li class="nav-item">
+                               <c:url var="urlProductType" value="/danh-sach-loai-san-pham" />
+                               <a class="nav-link text-white" href="${urlProductType}">Danh sách loại sản phẩm</a>
+                         </li>
+                         <li class="nav-item">
+                               <c:url var="urlProduct" value="/danh-sach-san-pham" />
+                               <a class="nav-link text-white" href="${urlProduct}">Danh sách sản phẩm</a>
+                         </li>
+                         <li class="nav-item">
                                 <c:url var="urlBooking" value="/danh-sach-dat-phong" />
                                 <a class="nav-link text-white" href="${urlBooking}">Danh sách đặt phòng</a>
-                           </li>
-                           <li class="nav-item">
+                         </li>
+                         <li class="nav-item">
                                <c:url var="urlRoomBook" value="/danh-sach-phong-co-nguoi-o" />
                                <a class="nav-link text-white" href="${urlRoomBook}">Danh sách phòng đang có người ở</a>
-                          </li>
+                         </li>
                           <li class="nav-item">
                               <c:url var="urlRoomBill" value="/danh-sach-hoa-don-phong" />
                               <a class="nav-link text-white" href="${urlRoomBill}">Danh sách hóa đơn phòng</a>

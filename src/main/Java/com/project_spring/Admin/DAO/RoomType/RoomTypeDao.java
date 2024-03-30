@@ -24,7 +24,6 @@ import java.util.List;
 
 @Repository
 public class RoomTypeDao implements IRoomTypeDao {
-
     @Autowired
     JdbcTemplate jdbcTemplate;
 

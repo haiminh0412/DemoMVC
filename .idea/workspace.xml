@@ -5,92 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f4ed449-93bb-450c-81c5-a1722a26b5d5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/Java/Config/config/JPAConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/Config/config/SpringBootDataJpaApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/API/NewApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Customer/CustomerDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Customer/ICustomerDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/OccupiedRoom/IOccupiedRoomDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/OccupiedRoom/OccupiedRoomDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Payment/IPaymentDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Payment/PaymentDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/OccupiedRoom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Repository/RoomTypeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Customer/CustomerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Customer/ICustomerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/OccupiedRoom/IOccupiedRoomService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/OccupiedRoom/OccupiedRoomService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Payment/IPaymentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Payment/PaymentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Utils/HttpUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Validator/RoomTypeValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Validator/RoomValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Validator/ValidMoney.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/Booking/BookingController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/OccupiedRoom/OccupiedRoomController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/Payment/PaymentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/angus-activation-2.0.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/antlr4-runtime-4.13.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/byte-buddy-1.14.11.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/classmate-1.5.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/hibernate-commons-annotations-6.0.6.Final.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/hibernate-core-6.4.4.Final.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/istack-commons-runtime-4.1.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jakarta.activation-api-2.1.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jakarta.inject-api-2.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jakarta.persistence-api-3.1.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jakarta.transaction-api-2.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jakarta.xml.bind-api-4.0.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jandex-3.1.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jaxb-core-4.0.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jaxb-runtime-4.0.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/jboss-logging-3.5.0.Final.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/tomcat-embed-core-11.0.0-M16.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/txw2-4.0.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Booking/booking.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Booking/check-in-booked.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Booking/check-in.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Booking/edit-booking.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Booking/occupied-room.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/inhabited-room.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/list-bill.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/payment.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/api-admin-roomType.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Product/IProductDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Product/ProductDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/ProductType/IProductTypeDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/ProductType/ProductTypeDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Unit/IUnitDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Unit/UnitDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/ProductType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Unit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Product/IProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Product/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/ProductType/IProductTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/ProductType/ProductTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Unit/IUnitService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Unit/UnitService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/Product/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/ProductType/ProductTypeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/Unit/UnitController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Product/add-product.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Product/edit-product.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Product/list-product.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/ProductType/add-product-type.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/ProductType/edit-product-type.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/ProductType/list-product-type.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Unit/add-unit.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Unit/edit-unit.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Unit/list-unit.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/Config/config/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/Config/config/Configuration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Booking/BookingDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Booking/BookingDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Room/IRoomDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Room/IRoomDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Room/RoomDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/Room/RoomDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/RoomType/IRoomTypeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/RoomType/IRoomTypeDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/RoomType/RoomTypeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/DAO/RoomType/RoomTypeDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Booking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/RoomType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Model/RoomType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Booking/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Booking/BookingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Booking/IBookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Booking/IBookingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Room/IRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Room/IRoomService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Room/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Room/RoomService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Room/User/IUserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/User/IUserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/Room/User/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/User/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/RoomType/RoomTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/Service/RoomType/RoomTypeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/Facilities/FacilitiesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/Facilities/FacilitiesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/Room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/Room/RoomController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/RoomType/RoomTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/RoomType/RoomTypeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/User/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/project_spring/Admin/controllers/User/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Booking/list-booking.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Booking/list-booking.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/add-room.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/add-room.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/list-room.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/list-room.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/RoomType/add-room-type.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/RoomType/add-room-type.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/RoomType/list-room-type.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/RoomType/list-room-type.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/edit-room.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/Admin/Room/edit-room.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/inc/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/inc/header.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -145,7 +90,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Java MVC/Project Hotel Management&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Tri tue nhan tao/KiemThuPhanMem&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Facets&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15332031&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
