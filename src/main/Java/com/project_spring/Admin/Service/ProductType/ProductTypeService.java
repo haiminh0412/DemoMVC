@@ -1,6 +1,7 @@
 package com.project_spring.Admin.Service.ProductType;
 
 import com.project_spring.Admin.DAO.ProductType.ProductTypeDao;
+import com.project_spring.Admin.Model.Product;
 import com.project_spring.Admin.Model.ProductType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class ProductTypeService implements IProductTypeService{
 
     @Override
     public boolean addProductType(ProductType productType) {
-        if(!productTypeDao.isExistProdcutType(productType)) {
+        if(isValid(productType) && productTypeDao.isExistProdcutType(productType) == 0) {
             return productTypeDao.addProductType(productType);
         }
         return false;
@@ -22,16 +23,27 @@ public class ProductTypeService implements IProductTypeService{
 
     @Override
     public boolean deleteProductType(int id) {
-        return productTypeDao.deleteProductType(id);
+        if(productTypeDao.isDeleted(id) == 0) {
+            return productTypeDao.deleteProductType(id);
+        }
+        return false;
     }
 
-    @Override
     public boolean updateProductType(ProductType productType) {
-        return !productTypeDao.isExistProdcutType(productType) ? productTypeDao.updateProductType(productType) : false;
+        List<ProductType> productTypes = productTypeDao.listAllProductType();
+        for(int i = 0; i < productTypes.size(); ++i) {
+            if(productTypes.get(i).getProductTypeId() != productType.getProductTypeId() && productTypes.get(i).getName().equals(productType.getName())) {
+                return false;
+            }
+        }
+        if(isValid(productType)) {
+            return productTypeDao.updateProductType(productType);
+        }
+        return false;
     }
 
     @Override
-    public boolean isExistProdcutType(ProductType productType) {
+    public int isExistProdcutType(ProductType productType) {
         return productTypeDao.isExistProdcutType(productType);
     }
 
@@ -43,5 +55,9 @@ public class ProductTypeService implements IProductTypeService{
     @Override
     public ProductType findProductTypeById(int id) {
         return productTypeDao.findProductTypeById(id);
+    }
+
+    private boolean isValid(ProductType productType) {
+        return productType.getName().length() <= 100 && productType.getDescription().length() <= 100;
     }
 }

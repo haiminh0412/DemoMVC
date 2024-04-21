@@ -48,7 +48,8 @@ public class Payment implements Serializable {
     }
 
     public double getRefund() {
-        return transactionAmount - booking.getTotalAmount();
+        double price = transactionAmount - booking.getTotalAmount();
+        return price > 0 ? price : 0;
     }
 
     public void setRefund(double refund) {

@@ -1,21 +1,17 @@
 package com.project_spring.Admin.controllers.Room;
 
-import com.project_spring.Admin.Model.Facilities;
-import com.project_spring.Admin.Model.FacilitiesType;
-import com.project_spring.Admin.Model.Room;
-import com.project_spring.Admin.Model.RoomType;
+import com.project_spring.Admin.Model.*;
 import com.project_spring.Admin.Service.Room.RoomService;
 import com.project_spring.Admin.Service.RoomType.RoomTypeService;
 import com.project_spring.Admin.Validator.RoomValidator;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Base64;
@@ -34,18 +30,44 @@ public class RoomController {
     @Autowired
     RoomValidator roomValidator;
 
+    @GetMapping(value = "/list-room")
+    public @ResponseBody ResponseEntity<?> listAllRoomAPI() {
+        try {
+            List<Room> rooms = roomService.displayAllRoom();
+            return ResponseEntity.ok(rooms);
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Xay ra loi: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping(value="/xoa-phong/id={id}")
+    public  @ResponseBody ResponseEntity<?> deleteRoomAPI( @PathVariable(name="id") int id) {
+        Room room = roomService.finhRoomById(id);
+        roomService.deleteRoom(id);
+        return ResponseEntity.ok(room);
+    }
+
+    @PostMapping(value = "/add-room")
+    public @ResponseBody ResponseEntity<?> addRoomAPI(@RequestBody Room room) {
+        try {
+            roomService.addRoom(room);
+            return ResponseEntity.ok(room);
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Xay ra loi: " + e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "/danh-sach-phong", method = RequestMethod.GET)
     public String displayAllRooms(HttpServletRequest httpServletRequest) {
         List<Room> rooms = roomService.displayAllRoom();
-        Map<Integer, String> roomMap = new HashMap<>();
-        for(Room room : rooms) {
-            String base64RoomImage = Base64.getEncoder().encodeToString(room.getImage());
-            int roomId = room.getRoomId();
-            roomMap.put(roomId, base64RoomImage);
-        }
+
         httpServletRequest.setAttribute("rooms", rooms);
 //        httpServletRequest.setAttribute("base64_RoomImage", base64Image);
-        httpServletRequest.setAttribute("roomMap", roomMap);
+
         return "Admin/Room/list-room";
     }
 
@@ -63,15 +85,14 @@ public class RoomController {
     @RequestMapping(value = "/them-phong", method = RequestMethod.POST)
     public String addRoom(HttpServletRequest httpServletRequest, @ModelAttribute("room") @Valid Room room,
                                 BindingResult bindingResult) throws Exception {
-        roomValidator.validate(room, bindingResult);
-        if(bindingResult.hasErrors()) {
-            return "Admin/Room/add-room";
-        }
+      //  roomValidator.validate(room, bindingResult);
+//        if(bindingResult.hasErrors()) {
+//            return "Admin/Room/add-room";
+//        }
 
         RoomType roomType = roomTypeService.findRoomTypeById(room.getRoomTypeId());
         room.setRoomType(roomType);
         boolean result = roomService.addRoom(room);
-        System.out.println(room.getImage());
         return result ? "redirect:/danh-sach-phong" : "Admin/Room/add-room";
     }
 

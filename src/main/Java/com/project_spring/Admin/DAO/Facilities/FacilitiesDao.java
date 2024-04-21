@@ -23,8 +23,8 @@ public class FacilitiesDao implements IFacilitiesDao{
 
     @Override
     public boolean addFacilities(Facilities facilities) {
-        String query = "INSERT INTO Facilities(id, name, price, quantity, TotalPrice, date_buy, status, manufacturer, facilitiestypeid) VALUE(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(query, facilities.getId(),facilities.getName(), facilities.getPrice(), facilities.getQuantity(), facilities.getTotalPrice(), facilities.getDate_buy(), facilities.getStatus(), facilities.getManufacturer(), facilities.getFacilitiesType().getId()) > 0;
+        String query = "INSERT INTO Facilities(name, price, quantity, TotalPrice, date_buy, status, manufacturer, facilitiestypeid) VALUE(?, ?, ?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(query, facilities.getName(), facilities.getPrice(), facilities.getQuantity(), facilities.getTotalPrice(), facilities.getDate_buy(), facilities.getStatus(), facilities.getManufacturer(), facilities.getFacilitiesType().getId()) > 0;
     }
 
     @Override
@@ -32,11 +32,21 @@ public class FacilitiesDao implements IFacilitiesDao{
         String query = "DELETE FROM Facilities WHERE id = ?";
         return jdbcTemplate.update(query, facilitiesId) > 0;
     }
+    public boolean checkExists(int id) {
+        String query = "SELECT COUNT(*) FROM Facilities WHERE id = ?";
+        int count = jdbcTemplate.queryForObject(query, Integer.class, id);
+        return count > 0;
+    }
+    public boolean checkExistsFacilitiesTpye(String idFacilitiesType) {
+        String query = "SELECT COUNT(*) FROM Facilities WHERE facilitiestypeid = ?";
+        int count = jdbcTemplate.queryForObject(query, Integer.class, idFacilitiesType);
+        return count > 0;
+    }
 
     @Override
     public boolean updateFacilities(Facilities facilities) {
         String query = "UPDATE Facilities SET name = ?, price = ?, quantity = ?, TotalPrice = ? ,date_buy = ?, status = ?, manufacturer = ?, facilitiestypeid = ? WHERE id = ?";
-        return jdbcTemplate.update(query, facilities.getName(), facilities.getPrice(), facilities.getQuantity(), facilities.getQuantity() * facilities.getPrice(), facilities.getDate_buy(), facilities.getStatus(), facilities.getManufacturer(), facilities.getFacilitiesTypeId(), facilities.getId()) > 0;
+        return jdbcTemplate.update(query, facilities.getName(), facilities.getPrice(), facilities.getQuantity(), facilities.getQuantity() * facilities.getPrice(), facilities.getDate_buy(), facilities.getStatus(), facilities.getManufacturer(), facilities.getFacilitiesType().getId(), facilities.getId()) > 0;
     }
 
     @Override

@@ -28,6 +28,34 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
+<script>
+    $(document).ready(function() {
+       // Lấy địa chỉ URL hiện tại
+       const currentURL = window.location.href;
+
+       // Tách đoạn cuối của URL để chỉ lấy phần chứa tham số
+       const parameterPart = currentURL.split('/').pop();
+
+       // Tách phần chứa tham số để lấy giá trị số
+       const parameterValue = parameterPart.split('=').pop();
+
+       // Chuyển đổi giá trị số sang kiểu số nguyên
+       const id = parseInt(parameterValue);
+
+        const API_URL = 'http://localhost:8080/DemoMVC/find-unit/unitId='+id;
+        $.getJSON(API_URL, function(unit) {
+            // Gán các giá trị thuộc tính của productType vào các biến riêng
+            var unitId = unit.unitId;
+            var unitName = unit.name;
+            var unitDescription = unit.description;
+
+            // Gán giá trị vào các trường input trên form
+           document.getElementById("name").value = unit.name;
+           document.getElementById("description").value = unit.description;
+        });
+    });
+</script>
+
 <body class="bg-white">
     <%@ include file="/WEB-INF/views/inc/header.jsp" %>
     <div class="container-fluid" id="main-content">
@@ -38,11 +66,11 @@
                 <form id="editUnitForm">
                     <div class="form-group">
                         <label for="name">Tên đơn vị:</label>
-                        <input type="text" class="form-control" id="name" name="name" value="<c:out value='${unit.name}'/>">
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group">
                         <label for="description">Mô tả:</label>
-                        <input type="text" class="form-control" id="description" name="description" value="<c:out value='${unit.description}'/>">
+                        <input type="text" class="form-control" id="description" name="description">
                     </div>
                     <button type="button" class="btn btn-primary" onclick="editUnit()">Xác nhận sửa</button>
                     <button type="button" class="btn btn-sm rounded-pill btn-danger" onclick="history.go(-1)">Hủy</button>
@@ -56,6 +84,11 @@
         var name = $("#name").val();
         var description = $("#description").val();
         var unitId = "<c:out value='${unit.unitId}'/>";
+
+         if(name.length == 0) {
+           alert("Vui lòng không để trống");
+           return;
+         }
 
         var unitData = {
             "name": name,

@@ -1,9 +1,7 @@
 package com.project_spring.Admin.controllers.Payment;
 
-import com.project_spring.Admin.Model.Booking;
-import com.project_spring.Admin.Model.Payment;
-import com.project_spring.Admin.Model.Room;
-import com.project_spring.Admin.Model.RoomType;
+import com.project_spring.Admin.DAO.Payment.PaymentDao;
+import com.project_spring.Admin.Model.*;
 import com.project_spring.Admin.Service.Booking.BookingService;
 import com.project_spring.Admin.Service.Payment.PaymentService;
 import com.project_spring.Admin.Service.Room.RoomService;
@@ -18,6 +16,8 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +40,8 @@ public class PaymentController {
 
     @Autowired
     BookingService bookingService;
+    @Autowired
+    PaymentDao paymentDao;
 
     @Autowired
     RoomService roomService;
@@ -50,7 +52,10 @@ public class PaymentController {
         httpServletRequest.setAttribute("payments", payments);
         return "Admin/Room/list-bill";
     }
-
+    @GetMapping(value = "/danh-sach-thanh-toan")
+    public @ResponseBody List<Payment> list(){
+        return paymentService.listAll();
+    }
     @RequestMapping(value = "/thanh-toan-phong/bookingId={bookingId}", method = RequestMethod.GET)
     public String addPayment(HttpServletRequest httpServletRequest, @PathVariable(name = "bookingId") int bookingId) {
         Booking booking = bookingService.findBookingById(bookingId);
@@ -69,65 +74,65 @@ public class PaymentController {
     }
 
 
-     @RequestMapping(value = "/xuat-file-excel/id={paymentId}", method = RequestMethod.GET)
-     public String exportExcel(HttpServletRequest httpServletRequest, @PathVariable(name = "paymentId") int paymentId) {
-         Payment payment = paymentService.findByPaymenId(paymentId);
-         String roomName = payment.getBooking().getRoom().getRoomName();
-         Date date = payment.getTransactionDate();
-         XSSFWorkbook workbook = new XSSFWorkbook();
-         // dat ten sheet
-         XSSFSheet sheet = workbook.createSheet("Bill-" + roomName + "-" + date);
+    @RequestMapping(value = "/xuat-file-excel/id={paymentId}", method = RequestMethod.GET)
+    public String exportExcel(HttpServletRequest httpServletRequest, @PathVariable(name = "paymentId") int paymentId) {
+        Payment payment = paymentService.findByPaymenId(paymentId);
+        String roomName = payment.getBooking().getRoom().getRoomName();
+        Date date = payment.getTransactionDate();
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        // dat ten sheet
+        XSSFSheet sheet = workbook.createSheet("Bill-" + roomName + "-" + date);
 
-         XSSFRow row = null;
-         Cell cell = null;
+        XSSFRow row = null;
+        Cell cell = null;
 
-         // viet cac tieu de
-         row = sheet.createRow(0);
-         cell = row.createCell(0, CellType.STRING);
-         cell.setCellValue("Mã hóa đơn");
+        // viet cac tieu de
+        row = sheet.createRow(0);
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue("Mã hóa đơn");
 
-         cell = row.createCell(1, CellType.STRING);
-         cell.setCellValue("Khách hàng");
+        cell = row.createCell(1, CellType.STRING);
+        cell.setCellValue("Khách hàng");
 
-         cell = row.createCell(2, CellType.STRING);
-         cell.setCellValue("Phòng");
+        cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue("Phòng");
 
-         cell = row.createCell(3, CellType.STRING);
-         cell.setCellValue("Tền phòng");
+        cell = row.createCell(3, CellType.STRING);
+        cell.setCellValue("Tền phòng");
 
-         cell = row.createCell(4, CellType.STRING);
-         cell.setCellValue("Tiền khách trả");
+        cell = row.createCell(4, CellType.STRING);
+        cell.setCellValue("Tiền khách trả");
 
-         cell = row.createCell(5, CellType.STRING);
-         cell.setCellValue("Còn nợ");
+        cell = row.createCell(5, CellType.STRING);
+        cell.setCellValue("Còn nợ");
 
-         cell = row.createCell(6, CellType.STRING);
-         cell.setCellValue("Ngày lập hóa đơn");
+        cell = row.createCell(6, CellType.STRING);
+        cell.setCellValue("Ngày lập hóa đơn");
 
-         cell = row.createCell(7, CellType.STRING);
-         cell.setCellValue("Trạng thái");
+        cell = row.createCell(7, CellType.STRING);
+        cell.setCellValue("Trạng thái");
 
 
-         // viet cac gia tri
-         row = sheet.createRow(1);
+        // viet cac gia tri
+        row = sheet.createRow(1);
 
-         cell = row.createCell(0, CellType.STRING);
-         cell.setCellValue(paymentId);
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue(paymentId);
 
-         cell = row.createCell(1, CellType.STRING);
-         cell.setCellValue(payment.getBooking().getCustomer().getName());
+        cell = row.createCell(1, CellType.STRING);
+        cell.setCellValue(payment.getBooking().getCustomer().getName());
 
-         cell = row.createCell(2, CellType.STRING);
-         cell.setCellValue(payment.getBooking().getRoom().getRoomName());
+        cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue(payment.getBooking().getRoom().getRoomName());
 
-         cell = row.createCell(3, CellType.STRING);
-         cell.setCellValue(payment.getBooking().getTotalAmount());
+        cell = row.createCell(3, CellType.STRING);
+        cell.setCellValue(payment.getBooking().getTotalAmount());
 
-         cell = row.createCell(4, CellType.STRING);
-         cell.setCellValue(payment.getTransactionAmount());
+        cell = row.createCell(4, CellType.STRING);
+        cell.setCellValue(payment.getTransactionAmount());
 
-         cell = row.createCell(5, CellType.STRING);
-         cell.setCellValue(payment.getRefund());
+        cell = row.createCell(5, CellType.STRING);
+        cell.setCellValue(payment.getRefund());
 
 //         // Định dạng ô thành ngày tháng
 //         CellStyle cellStyle = workbook.createCellStyle();
@@ -137,28 +142,28 @@ public class PaymentController {
 //
 //         // Định dạng ngày tháng từ chuỗi
 //         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-         row.createCell(6).setCellValue(payment.getTransactionDate().toString());
+        row.createCell(6).setCellValue(payment.getTransactionDate().toString());
 
-         cell = row.createCell(7, CellType.STRING);
-         cell.setCellValue(payment.getTransactionAmount() >= payment.getBooking().getTotalAmount() ? "Đã thanh toán" : "Còn nợ");
+        cell = row.createCell(7, CellType.STRING);
+        cell.setCellValue(payment.getTransactionAmount() >= payment.getBooking().getTotalAmount() ? "Đã thanh toán" : "Còn nợ");
 
-         // luu file
-         File file = new File("Bill-" + roomName + "-" + date + ".xlsx");
-         if(!file.exists()) {
-             try {
-                 file.createNewFile();
-             } catch (IOException e) {
-                 throw new RuntimeException(e);
-             }
-         }
+        // luu file
+        File file = new File("Bill-" + roomName + "-" + date + ".xlsx");
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-         FileOutputStream fileOutputStream = null;
-         try {
-             fileOutputStream = new FileOutputStream(file);
-             workbook.write(fileOutputStream);
-         } catch (Exception e) {
-             System.out.println(e.getMessage());
-         } finally {
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+            workbook.write(fileOutputStream);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
             if(fileOutputStream != null) {
                 try {
                     fileOutputStream.close();
@@ -168,8 +173,31 @@ public class PaymentController {
                     System.out.println(e.getMessage());
                 }
             }
-         }
+        }
 
-         return "redirect:/danh-sach-hoa-don-phong";
-   }
+        return "redirect:/danh-sach-hoa-don-phong";
+    }
+    @GetMapping(value = "/lay_danh_sach/{id}")
+    public @ResponseBody  Booking getPaymentById(@PathVariable("id") int id) {
+        Booking booking = bookingService.findBookingById(id);
+        return booking;
+    }
+    @GetMapping(value = "/get_refund/{idTransaction}")
+    public @ResponseBody ResponseEntity<Payment> getPaymentInformation(@PathVariable("idTransaction") int idTransaction) {
+        Payment payment = paymentService.findByPaymenId(idTransaction);
+
+        if (payment == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(payment);
+    }
+    @PostMapping(value = "/them_payment")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public ResponseEntity<?> addPaymentAPI(@RequestBody Payment payment) {
+        boolean result = paymentService.insert(payment);
+        Room room = payment.getBooking().getRoom();
+        roomService.upadateStatus(room, "Trống");
+        return new ResponseEntity<>("Thanh cong", HttpStatus.CREATED);
+    } // cái hàm loz này viết vớ vẩn đ chịu được bố thằng ngo
 }

@@ -46,6 +46,8 @@ public class UnitDao implements IUnitDao{
         return maxId;
     }
 
+
+
     @Override
     public boolean deleteUnit(int id) {
         try {
@@ -71,24 +73,26 @@ public class UnitDao implements IUnitDao{
     }
 
     @Override
-    public boolean isExistUnit(Unit unit) {
-        List<Unit> units = new ArrayList<>();
+    public int isExistUnit(Unit unit) {
+        int count = -1;
         try {
-            String query = "SELECT * FROM Unit WHERE name = ?";
-            units = jdbcTemplate.query(query, new Object[]{unit.getName()}, new RowMapper<Unit>() {
-                @Override
-                public Unit mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    Unit unit = new Unit();
-                    unit.setUnitId(rs.getInt("unit_id"));
-                    unit.setName(rs.getString("name"));
-                    unit.setDescription(rs.getString("description"));
-                    return unit;
-                }
-            });
+            String query = "SELECT count(*) FROM Unit WHERE name = ?";
+            count = jdbcTemplate.queryForObject(query, new Object[] { unit.getName() }, Integer.class);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
-        return units.size() > 0;
+        return count;
+    }
+
+    public int isDeleted(int unitId) {
+        int count = -1;
+        try {
+            String query = "SELECT count(*) FROM Product WHERE unit_id = ?";
+            count = jdbcTemplate.queryForObject(query, new Object[] { unitId }, Integer.class);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return count;
     }
 
     @Override

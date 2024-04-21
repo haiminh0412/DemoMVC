@@ -31,10 +31,7 @@
                                Thêm mới
                             </a>
 
-                             <c:url var="urlCheckIn" value="/nhan-phong"/>
-                      `          <a href="urlCheckIn" class="btn btn-sm rounded-pill btn btn-danger">
-                                    Nhận phòng
-                                </a>`
+
                         </div>
 
                         <div class="table-responsive-md" style="height: 450px; overflow-y: scroll; overflow-x:scroll;">

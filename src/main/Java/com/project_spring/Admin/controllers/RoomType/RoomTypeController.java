@@ -24,6 +24,12 @@ public class RoomTypeController {
     @Autowired
     RoomTypeValidator roomTypeValidator;
 
+    @GetMapping(value = "/find-room-type/id={id}")
+    public @ResponseBody RoomType findRoomTypeAPI(@PathVariable("id") int id) {
+        RoomType roomType = roomTypeService.findRoomTypeById(id);
+        return roomType;
+    }
+
     @RequestMapping(value = "/list-room-type", method = RequestMethod.GET)
     public @ResponseBody List<RoomType> roomTypeList(HttpServletRequest httpServletRequest) {
         List<RoomType> roomTypes = roomTypeService.displayAllRoomType();

@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sửa đơn vị</title>
+    <title>Sửa loại sản phẩm</title>
     <%@ include file="/WEB-INF/views/inc/links.jsp" %>
 
     <!-- jQuery library -->
@@ -28,6 +28,10 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
+<script>
+
+</script>
+
 <body class="bg-white">
     <%@ include file="/WEB-INF/views/inc/header.jsp" %>
     <div class="container-fluid" id="main-content">
@@ -38,11 +42,11 @@
                 <form id="editProductTypeForm">
                     <div class="form-group">
                         <label for="name">Tên loại sản phẩm:</label>
-                        <input type="text" class="form-control" id="name" name="name" value="<c:out value='${productType.name}'/>">
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group">
                         <label for="description">Mô tả:</label>
-                        <input type="text" class="form-control" id="description" name="description" value="<c:out value='${productType.description}'/>">
+                        <input type="text" class="form-control" id="description" name="description">
                     </div>
                     <button type="button" class="btn btn-primary" onclick="editProductType()">Xác nhận sửa</button>
                     <button type="button" class="btn btn-sm rounded-pill btn-danger" onclick="history.go(-1)">Hủy</button>
@@ -52,6 +56,33 @@
     </div>
 
 <script>
+   $(document).ready(function() {
+       // Lấy địa chỉ URL hiện tại
+       const currentURL = window.location.href;
+
+       // Tách đoạn cuối của URL để chỉ lấy phần chứa tham số
+       const parameterPart = currentURL.split('/').pop();
+
+       // Tách phần chứa tham số để lấy giá trị số
+       const parameterValue = parameterPart.split('=').pop();
+
+       // Chuyển đổi giá trị số sang kiểu số nguyên
+       id = parseInt(parameterValue);
+
+        const API_URL = 'http://localhost:8080/DemoMVC/find-product-type/productTypeId='+id;
+        var ID;
+        $.getJSON(API_URL, function(productType) {
+            // Gán các giá trị thuộc tính của productType vào các biến riêng
+            ID = productType.productTypeId;
+            var productTypeName = productType.name;
+            var productTypeDescription = productType.description;
+
+            // Gán giá trị vào các trường input trên form
+           document.getElementById("name").value = productTypeName;
+           document.getElementById("description").value = productTypeDescription;
+        });
+    });
+
     function editProductType() {
         var name = $("#name").val();
         var description = $("#description").val();
@@ -61,6 +92,11 @@
             "name": name,
             "description": description
         };
+
+        if(name.length == 0) {
+           alert("Vui lòng không để trống");
+           return;
+        }
 
         // Thay đổi đường dẫn API và phương thức HTTP tương ứng thành PUT
         axios.put('http://localhost:8080/DemoMVC/edit-product-type/productTypeId=' + productTypeId, productTypeData)

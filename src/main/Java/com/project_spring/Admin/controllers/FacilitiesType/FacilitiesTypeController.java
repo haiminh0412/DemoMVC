@@ -1,16 +1,17 @@
 package com.project_spring.Admin.controllers.FacilitiesType;
 
+import com.project_spring.Admin.DAO.Facilities.FacilitiesDao;
 import com.project_spring.Admin.Model.FacilitiesType;
+import com.project_spring.Admin.Model.ProductType;
 import com.project_spring.Admin.Model.RoomType;
 import com.project_spring.Admin.Service.FacilitiesType.FacilitiesTypeService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,12 +20,82 @@ import java.util.List;
 public class FacilitiesTypeController {
     @Autowired
     FacilitiesTypeService facilitiesTypeService;
+    @Autowired
+    FacilitiesDao facilitiesDao;
+    @GetMapping(value = "/find-facilities-type/id={id}")
+    public @ResponseBody ResponseEntity<?> listAllFacilitiesTypeAPI(@PathVariable("id") String id) {
+        try {
+           FacilitiesType facilitiesType = facilitiesTypeService.findFacilitiesTypeById(id);
+            return ResponseEntity.ok(facilitiesType);
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Xay ra loi: " + e.getMessage());
+        }
+    }
 
+    @GetMapping(value = "/list-facilities-type")
+    public @ResponseBody ResponseEntity<?> listAllFacilitiesTypeAPI() {
+        try {
+            List<FacilitiesType> facilitiesTypes = facilitiesTypeService.displayAllFacilitiesType();
+            return ResponseEntity.ok(facilitiesTypes);
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Xay ra loi: " + e.getMessage());
+        }
+    }
+
+
+
+    @DeleteMapping(value = "/xoa-loai-co-so-vat-chat/id={id}")
+    public @ResponseBody ResponseEntity<?> deleteFacilitiesTypeAPI(@PathVariable("id") String id) {
+        if (facilitiesDao.checkExistsFacilitiesTpye(id)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Dang duoc su dung k the xoa");
+        } else {
+            try {
+                FacilitiesType facilitiesType = facilitiesTypeService.findFacilitiesTypeById(id);
+                facilitiesTypeService.deleteFacilitiesType(id);
+                facilitiesType.setId(id);
+                return ResponseEntity.ok(facilitiesType);
+            } catch (Exception e) {
+                // Xử lý ngoại lệ
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Xay ra loi: " + e.getMessage());
+            }
+        }
+    }
+
+    @PostMapping(value = "/add-facilities-type")
+    public @ResponseBody ResponseEntity<?> addFacilitiesTypeAPI(@RequestBody FacilitiesType facilitiesType) {
+        try {
+            facilitiesTypeService.addFacilitiesType(facilitiesType);
+            return ResponseEntity.ok(facilitiesType);
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Xay ra loi: " + e.getMessage());
+        }
+    }
+
+    @PutMapping(value = "/edit-facilities-type/id={id}")
+    public @ResponseBody ResponseEntity<?> editFacilitiesTypeAPI(@PathVariable("id") String id, @RequestBody FacilitiesType facilitiesType) {
+        try {
+            facilitiesType.setId(id);
+            facilitiesTypeService.updateFacilitiesType(facilitiesType);
+            return ResponseEntity.ok(facilitiesType);
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Xay ra loi: " + e.getMessage());
+        }
+    }
 
     @RequestMapping(value = "/danh-sach-loai-co-so-vat-chat", method = RequestMethod.GET)
     public String displayAllFacilitiesType(HttpServletRequest httpServletRequest) {
-        List<FacilitiesType> facilitiesTypes = facilitiesTypeService.displayAllFacilitiesType();
-        httpServletRequest.setAttribute("facilitiesTypes", facilitiesTypes);
+//        List<FacilitiesType> facilitiesTypes = facilitiesTypeService.displayAllFacilitiesType();
+//        httpServletRequest.setAttribute("facilitiesTypes", facilitiesTypes);
         return "Admin/FacilitiesType/list-facilities-type";
     }
 

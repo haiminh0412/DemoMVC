@@ -71,5 +71,27 @@
          <button type="button" value="Hủy" class="btn btn-sm rounded-pill btn-danger" onclick="history.go(-1)">Hủy</button>
     </form:form>
     <%@ include file="/WEB-INF/views/inc/scripts.jsp" %>
+    <script>
+        // Đợi tải xong trang
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lấy các phần tử cần thiết
+            var transactionAmountInput = document.querySelector("input[name='transactionAmount']");
+            var refundInput = document.querySelector("input[name='refund']");
+            var totalAmountInput = document.querySelector("input[name='booking.totalAmount']");
+
+            // Thêm sự kiện 'input' cho ô nhập tiền khách trả
+            transactionAmountInput.addEventListener("input", function() {
+                // Lấy giá trị tiền khách trả
+                var transactionAmount = parseFloat(transactionAmountInput.value);
+
+                // Lấy tổng tiền
+                var totalAmount = parseFloat(totalAmountInput.value);
+
+                // Tính toán và hiển thị số tiền trả lại
+                var refund = transactionAmount - totalAmount;
+                refundInput.value = refund.toFixed(2); // Giữ 2 chữ số sau dấu thập phân
+            });
+        });
+    </script>
 </body>
 </html>

@@ -47,6 +47,7 @@ $(document).ready(function() {
                         '<td>' + product.unit.name + '</td>' +
                         '<td>' + dateAddFormatted + '</td>' +
                         '<td>' + expiredFormatted + '</td>' +
+                        '<td>' + product.quantity + '</td>' +
                         '<td>' + product.price + '</td>' +
                         '<td>' + product.capitalPrice + '</td>' +
                         '<td>' + product.status + '</td>' +
@@ -108,7 +109,6 @@ function confirmDelete(productId) {
                             </a>
                         </div>
 
-
                         <div class="table-responsive-md" style="height: 450px; overflow-y: scroll; overflow-x:scroll;">
 
                             <table class="table bg-white table-hover border">
@@ -120,6 +120,7 @@ function confirmDelete(productId) {
                                     <th>Đơn vị tính</th>
                                     <th>Ngày nhập</th>
                                     <th>HSD</th>
+                                    <th>Số lượng</th>
                                     <th>Giá bán</th>
                                     <th>Giá nhập</th>
                                     <th>Trạng thái</th>

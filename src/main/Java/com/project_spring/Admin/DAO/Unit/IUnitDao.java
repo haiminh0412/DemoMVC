@@ -12,7 +12,7 @@ public interface IUnitDao {
 
     boolean updateUnit(Unit unit);
 
-    boolean isExistUnit(Unit unit);
+    int isExistUnit(Unit unit);
     List<Unit> listAllUnit();
     Unit findUnitById(int id);
 }

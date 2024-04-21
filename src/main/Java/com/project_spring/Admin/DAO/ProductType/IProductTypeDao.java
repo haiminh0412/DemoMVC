@@ -11,7 +11,7 @@ public interface IProductTypeDao {
 
     boolean updateProductType(ProductType productType);
 
-    boolean isExistProdcutType(ProductType productType);
+    int isExistProdcutType(ProductType productType);
     List<ProductType> listAllProductType();
     ProductType findProductTypeById(int id);
 }

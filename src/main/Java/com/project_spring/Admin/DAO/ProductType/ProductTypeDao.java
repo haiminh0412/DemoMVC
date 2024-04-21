@@ -69,25 +69,29 @@ public class ProductTypeDao implements IProductTypeDao{
         return true;
     }
 
-    @Override
-    public boolean isExistProdcutType(ProductType productType) {
-        List<ProductType> productTypes = new ArrayList<>();
+    public int isDeleted(int id) {
+        int count = -1;
         try {
-            String query = "SELECT * FROM ProductType WHERE name = ?";
-            productTypes = jdbcTemplate.query(query, new Object[]{productType.getName()}, new RowMapper<ProductType>() {
-                @Override
-                public ProductType mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    ProductType productType = new ProductType();
-                    productType.setProductTypeId(rs.getInt("ProductTypeId"));
-                    productType.setName(rs.getString("name"));
-                    productType.setDescription(rs.getString("description"));
-                    return productType;
-                }
-            });
+            String query = "SELECT count(*) FROM Product where productTypeId = ?";
+            count = jdbcTemplate.queryForObject(query, new Object[] {id},Integer.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return -1;
         }
-        return productTypes.size() > 0;
+        return count;
+    }
+
+    @Override
+    public int isExistProdcutType(ProductType productType) {
+        int count = -1;
+        try {
+            String query = "SELECT count(*) FROM ProductType where name = ?";
+            count = jdbcTemplate.queryForObject(query, new Object[] {productType.getName()},Integer.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return count;
     }
 
     @Override

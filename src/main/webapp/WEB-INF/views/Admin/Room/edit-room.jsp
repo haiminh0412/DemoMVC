@@ -15,13 +15,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%@ include file="/WEB-INF/views/inc/links.jsp" %>
     <link rel="stylesheet" href="<c:url value='/resource/css/edit-facilities-type.css'/>">
+    <script>
+        function validateForm() {
+            var roomName = document.forms["roomForm"]["roomName"].value;
+            var pricePerNight = document.forms["roomForm"]["pricePerNight"].value;
+            var quantity = document.forms["roomForm"]["quantity"].value;
+            var area = document.forms["roomForm"]["area"].value;
+
+            // Kiểm tra không được để trống và không điền số 0 vào các trường
+            if (roomName.trim() === "") {
+                alert("Vui lòng nhập tên phòng.");
+                return false;
+            }
+            if (pricePerNight.trim() === "" || pricePerNight.trim() === "0") {
+                alert("Vui lòng nhập giá phòng hợp lệ.");
+                return false;
+            }
+            if (quantity.trim() === "" || quantity.trim() === "0") {
+                alert("Vui lòng nhập số lượng phòng hợp lệ.");
+                return false;
+            }
+            if (area.trim() === "" || area.trim() === "0") {
+                alert("Vui lòng nhập diện tích hợp lệ.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 
 <body class="bg-white">
     <%@ include file="/WEB-INF/views/inc/header.jsp" %>
     <h4>Sửa phòng</h4>
     <c:url value="/sua-phong" var="url"/>
-    <form:form modelAttribute="room" method="post" action="${url}">
+    <form:form modelAttribute="room" method="post" action="${url}" name="roomForm" onsubmit="return validateForm()">
          <form:hidden path="roomId"/>
 
          <p>Tên phòng</p> <form:input path="roomName"/>

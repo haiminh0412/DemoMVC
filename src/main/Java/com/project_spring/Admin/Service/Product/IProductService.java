@@ -11,7 +11,7 @@ public interface IProductService {
 
     boolean updateProduct(Product product);
 
-    boolean isExistProdcut(Product product);
+    int isExistProdcut(Product product);
 
     List<Product> listAllProduct();
 

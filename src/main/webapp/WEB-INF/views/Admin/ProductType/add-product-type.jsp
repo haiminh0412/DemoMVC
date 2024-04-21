@@ -62,6 +62,11 @@
                 "description": description
             };
 
+             if(name.length == 0) {
+               alert("Vui lòng không để trống");
+               return;
+             }
+
             axios.post('http://localhost:8080/DemoMVC/add-product-type', productTypeData)
                 .then(function (response) {
                     console.log(response.data);

@@ -26,8 +26,8 @@ public class FacilitiesController {
 
     @RequestMapping(value = "/danh-sach-co-so-vat-chat", method = RequestMethod.GET)
     public String displayAllFacilities(HttpServletRequest httpServletRequest) {
-        List<Facilities> facilities = facilitiesService.displayAllFacilities();
-        httpServletRequest.setAttribute("facilities", facilities);
+//        List<Facilities> facilities = facilitiesService.displayAllFacilities();
+//        httpServletRequest.setAttribute("facilities", facilities);
         return "Admin/Facilities/list-facilities";
     }
 

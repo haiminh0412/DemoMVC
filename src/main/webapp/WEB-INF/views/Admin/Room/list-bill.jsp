@@ -15,6 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách hóa đơn phòng</title>
     <%@ include file="/WEB-INF/views/inc/links.jsp" %>
+    <!-- Thêm thẻ script để bao gồm thư viện jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="bg-white">
     <%@ include file="/WEB-INF/views/inc/header.jsp" %>
@@ -26,49 +28,59 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
 
-                      <!--  <div class="text-end mb-4">
-                            <c:url var="urlAddRoom" value="/them-phong"/>
-                            <a href="${urlAddRoom}" class="btn btn-success rounded-pill shadow-none btn-sm">
-                               Thêm Phòng
-                            </a>
-                        </div> -->
-
+                        <!-- Bảng hóa đơn -->
                         <div class="table-responsive-md" style="height: 450px; overflow-y: scroll; overflow-x:scroll;">
-                             <!-- Bảng phòng -->
                             <table class="table bg-white table-hover border">
                                 <thead class="sticky-top sticky-bottom">
                                     <tr class="bg-dark text-light">
-                                    <th class="wide-column">Mã hóa đơn</th>
-                                    <th class="wide-column">Tên khách hàng</th>
-                                    <th class="wide-column">Tên phòng</th>
-                                    <th class="wide-column">Tiền phòng</th>
-                                    <th class="wide-column">Tiền khách trả</th>
-                                    <th class="wide-column">Còn nợ</th>
-                                    <th class="wide-column">Ngày lập hóa đơn</th>
-                                    <th class="wide-column">Trạng thái</th>
-                                    <th class="wide-column"></th>
-                                    <th class="wide-column"></th>
-                                    <th></th>
-                                    <th></th>
+                                        <th class="wide-column">Mã hóa đơn</th>
+                                        <th class="wide-column">Tên khách hàng</th>
+                                        <th class="wide-column">Tên phòng</th>
+                                        <th class="wide-column">Tiền phòng</th>
+                                        <th class="wide-column">Tiền khách trả</th>
+                                        <th class="wide-column">Còn nợ</th>
+                                        <th class="wide-column">Ngày lập hóa đơn</th>
+                                        <th class="wide-column">Trạng thái</th>
+                                        <th class="wide-column"></th>
+
                                     </tr>
                                 </thead>
-                                   <c:forEach var="payment" items="${payments}">
-                                        <tr>
-                                            <td>${payment.paymentId}</td>
-                                            <td>${payment.booking.customer.name}</td>
-                                            <td>${payment.booking.room.roomName}</td>
-                                            <td>${payment.booking.totalAmount}</td>
-                                            <td>${payment.transactionAmount}</td>
-                                            <td>${payment.refund}</td>
-                                            <td>${payment.transactionDate}</td>
-                                            <td>Đã thanh toán</td>
-                                            <th><a href="<c:url value='/xuat-file-excel/id=${payment.paymentId}'/>" class="btn btn-sm rounded-pill btn btn-success"/>Excel</th>
-                                        </tr>
-                                   </c:forEach>
+                                <!-- Thay đổi id của tbody thành "invoicesBody" để phù hợp với mã jQuery -->
+                                <tbody id="invoicesBody"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
     <%@ include file="/WEB-INF/views/inc/scripts.jsp" %>
+    <!-- Di chuyển mã script jQuery vào đây để đảm bảo rằng nó được gọi sau khi thư viện jQuery đã được bao gồm -->
+ <script>
+     $(document).ready(function() {
+         $.ajax({
+             url: 'http://localhost:8080/DemoMVC/danh-sach-thanh-toan', // Đảm bảo rằng URL này chính xác và trả về dữ liệu JSON
+             dataType: 'json',
+             success: function(data) {
+                 $.each(data, function(index, invoice) {
+                     var row = '<tr>' +
+                         '<td>' + invoice.paymentId + '</td>' +
+                         '<td>' + invoice.booking.customer.name + '</td>' +
+                         '<td>' + invoice.booking.room.roomName + '</td>' +
+                         '<td>' + invoice.booking.room.pricePerNight + '</td>' +
+                         '<td>' + invoice.transactionAmount + '</td>' +
+                         '<td>' + invoice.refund + '</td>' +
+                         '<td>' + new Date(invoice.transactionDate).toLocaleDateString() + '</td>' +
+                         '<td>' + (invoice.refund >= 0 ? 'Đã thanh toán' : 'Chưa thanh toán') + '</td>' +
+                         '<td><a href="/DemoMVC/xuat-file-excel/id=' + invoice.paymentId + '" class="btn btn-sm rounded-pill btn-success">Excel</a></td>' +
+                         '</tr>';
+                     $('#invoicesBody').append(row);
+                 });
+             }
+         });
+     });
+ </script>
+
+
 </body>
 </html>

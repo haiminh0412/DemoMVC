@@ -14,7 +14,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý khách sạn</title>
     <%@ include file="/WEB-INF/views/inc/links.jsp" %>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 </head>
+<script>
+$(document).ready(function() {
+    const API_URL = 'http://localhost:8080/DemoMVC/allListFacilities';
+
+    $.getJSON(API_URL, function(data) {
+        $.each(data,function(index, facilitie) {
+     var formattedDate = new Date(facilitie.date_buy).toLocaleDateString();
+            var row = '<tr>' +
+                        '<td>' + facilitie.id + '</td>' +
+                        '<td>' + facilitie.name + '</td>' +
+                        '<td>' + facilitie.price + '</td>' +
+                        '<td>' + facilitie.quantity + '</td>' +
+                        '<td>' + facilitie.totalPrice + '</td>' +
+                        '<td>' + formattedDate + '</td>' +
+                        '<td>' + facilitie.status + '</td>' +
+                        '<td>' + facilitie.manufacturer + '</td>' +
+                        '<td>' +facilitie.facilitiesType.facilitiesTypeName + '</td>' +
+                        '<td><button class="btn btn-sm rounded-pill btn-danger delete-btn" data-id="' + facilitie.id + '">Xóa</button></td>' +
+                        '<td><a href="/DemoMVC/sua-co-so-vat-chat/id=' + facilitie.id + '" class="btn btn-sm rounded-pill btn-primary">Sửa</a></td>' +
+                      '</tr>';
+            $('#facilities').append(row);
+        });
+
+        // Thêm sự kiện click vào nút xóa
+        $('.delete-btn').click(function() {
+            var unitId = $(this).data('id');
+            confirmDelete(unitId);
+        });
+    });
+});
+function confirmDelete(id) {
+    var result = confirm('Cảnh báo: Bạn có chắc muốn xóa sản phẩm này?');
+    if (result === true) {
+        // Gửi yêu cầu DELETE đến API
+        $.ajax({
+            url: 'http://localhost:8080/DemoMVC/deletecsvc/' + id,
+            type: 'DELETE',
+            success: function(result) {
+                // Nếu xóa thành công, làm mới trang
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('Đã xảy ra lỗi khi xóa sản phẩm!');
+            }
+        });
+    }
+}
+</script>
+
 <body class="bg-white">
     <%@ include file="/WEB-INF/views/inc/header.jsp" %>
     <div class="container-fluid" id="main-content">
@@ -39,7 +98,7 @@
                                     <tr class="bg-dark text-light">
                                     <th class="wide-column">ID</th>
                                     <th class="wide-column">Tên</th>
-                                    <th  class="wide-column">Giá</th>
+                                    <th class="wide-column">Giá</th>
                                     <th class="wide-column">Số lượng</th>
                                     <th class="wide-column">Tổng tiền</th>
                                     <th class="wide-column">Ngày mua</th>
@@ -51,37 +110,16 @@
                                     <th></th>
                                     </tr>
                                 </thead>
-                                   <c:forEach var="facilitie" items="${facilities}">
-                                        <tr>
-                                           <td>${facilitie.id}</td>
-                                           <td>${facilitie.name}</td>
-                                           <td>${facilitie.price}</td>
-                                           <td>${facilitie.quantity}</td>
-                                           <td><fmt:formatNumber value = " ${facilitie.totalPrice}" type = "currency"/></td>
-                                           <td>${facilitie.date_buy}</td>
-                                           <td>${facilitie.status}</td>
-                                           <td>${facilitie.manufacturer}</td>
-                                           <td>${facilitie.facilitiesType.facilitiesTypeName}</td>
-                                            <th><a href="<c:url value='/xoa-co-so-vat-chat/id=${facilitie.id}'/>" class="btn btn-sm rounded-pill btn-danger" onclick="return confirmDelete();"/>Xóa</th>
-                                            <th><a href="<c:url value='/sua-co-so-vat-chat/id=${facilitie.id}'/>" class="btn btn-sm rounded-pill btn-primary"/>Sửa</th>
-                                        </tr>
-                                   </c:forEach>
+                                     <tbody id="facilities"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
-       <script>
-            function confirmDelete() {
-            var result = confirm('Cảnh Báo : Nếu bạn đồng ý xóa đồng nghĩa bạn sẽ xóa các phòng có loại phòng này!Bạn có đồng ý?');
-            if (result === true) {
-                window.location.href = "list-facilities.jsp";
-                return true;
-            } else {
-                return false;
-            }
-        }
-       </script>
+            </div>
+        </div>
+    </div>
     <%@ include file="/WEB-INF/views/inc/scripts.jsp" %>
 </body>
+</html>
+
 </html>

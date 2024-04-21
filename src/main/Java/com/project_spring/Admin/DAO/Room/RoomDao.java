@@ -24,8 +24,8 @@ public class RoomDao implements IRoomDao {
     @Override
     public boolean addRoom(Room room) throws Exception {
         try {
-            String query = "INSERT INTO ROOM (RoomName, RoomTypeId, Image, PricePerNight, Area, Quantity) VALUES (?, ?, load_file('C:\\\\ProgramData\\\\MySQL\\\\MySQL Server 8.0\\\\Uploads\\\\" + room.getPathImage() + "'), ?, ?, ?)";
-            jdbcTemplate.update(query, room.getRoomName(), room.getRoomType().getRoomTypeId(), room.getPricePerNight(), room.getArea(), room.getQuantity());
+            String query = "INSERT INTO ROOM (RoomName, RoomTypeId, PricePerNight, Area, Quantity, status) VALUES (?, ?, ?, ?, ?, ?)";
+            jdbcTemplate.update(query, room.getRoomName(), room.getRoomType().getRoomTypeId(), room.getPricePerNight(), room.getArea(), room.getQuantity(), room.getStatus());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
@@ -48,7 +48,7 @@ public class RoomDao implements IRoomDao {
     @Override
     public boolean updateRoom(Room room) {
         try {
-            String query = "UPDATE Room SET RoomName = ?, PricePerNight = ?, Quantity = ?, RoomTypeId = ?, Area = ?, Image = load_file('C:\\\\ProgramData\\\\MySQL\\\\MySQL Server 8.0\\\\Uploads\\\\" + room.getPathImage() + "'), status = ? WHERE RoomId = ?";
+            String query = "UPDATE Room SET RoomName = ?, PricePerNight = ?, Quantity = ?, RoomTypeId = ?, Area = ?, status = ? WHERE RoomId = ?";
             jdbcTemplate.update(query, room.getRoomName(), room.getPricePerNight(), room.getQuantity(), room.getRoomTypeId(), room.getArea(), room.getStatus(), room.getRoomId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -76,7 +76,7 @@ public class RoomDao implements IRoomDao {
                     room.setArea(rs.getDouble("Area"));
                     room.setQuantity(rs.getInt("Quantity"));
                     room.setStatus(rs.getString("status"));
-                    room.setImage(rs.getBytes("Image"));
+
                     room.setRoomTypeId(rs.getInt("RoomTypeId"));
                     RoomType roomType = roomTypeService.findRoomTypeById(rs.getInt("RoomTypeId"));
                     room.setRoomType(roomType);
@@ -115,7 +115,7 @@ public class RoomDao implements IRoomDao {
                     room.setArea(rs.getDouble("Area"));
                     room.setQuantity(rs.getInt("Quantity"));
                     room.setStatus(rs.getString("status"));
-                    room.setImage(rs.getBytes("Image"));
+
                     room.setRoomTypeId(rs.getInt("RoomTypeId"));
                     RoomType roomType = roomTypeService.findRoomTypeById(rs.getInt("RoomTypeId"));
                     room.setRoomType(roomType);
@@ -142,7 +142,7 @@ public class RoomDao implements IRoomDao {
                     room.setArea(rs.getDouble("Area"));
                     room.setQuantity(rs.getInt("Quantity"));
                     room.setStatus(rs.getString("status"));
-                    room.setImage(rs.getBytes("Image"));
+
                     RoomType roomType = roomTypeService.findRoomTypeById(rs.getInt("RoomTypeId"));
                     room.setRoomType(roomType);
                     return room;

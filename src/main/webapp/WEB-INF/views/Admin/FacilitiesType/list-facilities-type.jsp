@@ -14,7 +14,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý khách sạn</title>
     <%@ include file="/WEB-INF/views/inc/links.jsp" %>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 </head>
+
+<script>
+$(document).ready(function() {
+    const API_URL = 'http://localhost:8080/DemoMVC/list-facilities-type';
+
+    $.getJSON(API_URL, function(data) {
+        $.each(data, function(index, facilitiesType) {
+            var row = '<tr>' +
+                        '<td>' + facilitiesType.id + '</td>' +
+                        '<td>' + facilitiesType.facilitiesTypeName + '</td>' +
+                        '<td><button class="btn btn-sm rounded-pill btn-danger delete-btn" data-id="' + facilitiesType.id  + '">Xóa</button></td>' +
+                        '<td><a href="/DemoMVC/sua-loai-co-so-vat-chat/id=' + facilitiesType.id  + '" class="btn btn-sm rounded-pill btn-primary">Sửa</a></td>' +
+                      '</tr>';
+            $('#facilitiesType').append(row);
+        });
+
+        // Thêm sự kiện click vào nút xóa
+        $('.delete-btn').click(function() {
+            var unitId = $(this).data('id');
+            confirmDelete(unitId);
+        });
+    });
+});
+
+
+function confirmDelete(id) {
+    var result = confirm('Cảnh báo: Bạn có chắc muốn xóa?');
+    if (result === true) {
+        // Gửi yêu cầu DELETE đến API
+        $.ajax({
+            url: 'http://localhost:8080/DemoMVC/xoa-loai-co-so-vat-chat/id=' + id,
+            type: 'DELETE',
+            success: function(result) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('Đã xảy ra lỗi khi xóa!');
+            }
+        });
+    } 
+}
+</script>
+
 <body class="bg-white">
     <%@ include file="/WEB-INF/views/inc/header.jsp" %>
     <div class="container-fluid" id="main-content">
@@ -26,47 +79,32 @@
                     <div class="card-body">
 
                         <div class="text-end mb-4">
-                            <c:url var="urlAddFacilitiesType" value="/them-loai-co-so-vat-chat"/>
-                            <a href="${urlAddFacilitiesType}" class="btn btn-success rounded-pill shadow-none btn-sm">
-                               Thêm loại cơ sở vật chất
+                            <a href="http://localhost:8080/DemoMVC/them-loai-co-so-vat-chat" class="btn btn-success rounded-pill shadow-none btn-sm">
+                                Thêm mới
                             </a>
                         </div>
 
+
                         <div class="table-responsive-md" style="height: 450px; overflow-y: scroll; overflow-x:scroll;">
-                             <!-- Bảng loại cơ sở vật chất -->
+
                             <table class="table bg-white table-hover border">
                                 <thead class="sticky-top">
                                     <tr class="bg-dark text-light">
-                                    <th>Mã loại cơ sở vật chất</th>
-                                    <th>Tên loại  cơ sở vật chất</th>
+                                    <th>ID</th>
+                                    <th>Tên</th>
                                     <th></th>
                                     <th></th>
                                     </tr>
                                 </thead>
-                                   <c:forEach var="facilitiesType" items="${facilitiesTypes}">
-                                        <tr>
-                                            <td>${facilitiesType.id}</td>
-                                            <td>${facilitiesType.facilitiesTypeName}</td>
-                                            <th><a href="<c:url value='/xoa-loai-co-so-vat-chat/id=${facilitiesType.id}'/>" class="btn btn-sm rounded-pill btn-danger" onclick="return confirmDelete();"/>Xóa</th>
-                                            <th><a href="<c:url value='/sua-loai-co-so-vat-chat/id=${facilitiesType.id}'/>" class="btn btn-sm rounded-pill btn-primary"/>Sửa</th>
-                                        </tr>
-                                   </c:forEach>
+                                <tbody id="facilitiesType"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-       <script>
-            function confirmDelete() {
-            var result = confirm('Cảnh Báo : Nếu bạn đồng ý xóa đồng nghĩa bạn sẽ xóa các phòng có loại phòng này!Bạn có đồng ý?');
-            if (result === true) {
-                window.location.href = "list-facilities-type.jsp";
-                return true;
-            } else {
-                return false;
-            }
-        }
-       </script>
     <%@ include file="/WEB-INF/views/inc/scripts.jsp" %>
 </body>
 </html>

@@ -30,9 +30,9 @@ public class ProductDao implements IProductDao{
     @Override
     public boolean addProduct(Product product) {
         try {
-            String query = "INSERT INTO Product(name, productTypeId, unit_id, date_add, expired, price, capital_price, status, description) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Product(name, productTypeId, unit_id, date_add, expired, quantity, price, capital_price, status, description) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(query, product.getName(), product.getProducType().getProductTypeId(), product.getUnit().getUnitId(),
-                    product.getDateAdd(), product.getExpired(), product.getPrice(), product.getCapitalPrice(), product.getStatus(), product.getDescription());
+                    product.getDateAdd(), product.getExpired(), product.getQuantity(), product.getPrice(), product.getCapitalPrice(), product.getStatus(), product.getDescription());
             int id = getId();
             if(id != -1) {
                 product.setProductId(id + 1);
@@ -71,9 +71,9 @@ public class ProductDao implements IProductDao{
     @Override
     public boolean updateProduct(Product product) {
         try {
-            String query = "UPDATE Product SET name = ?, productTypeId = ?, unit_id = ?, date_add = ?, expired = ?, price = ?,  capital_price = ?, status = ?, description = ? WHERE product_id = ?";
+            String query = "UPDATE Product SET name = ?, productTypeId = ?, unit_id = ?, date_add = ?, expired = ?, quantity = ?, price = ?,  capital_price = ?, status = ?, description = ? WHERE product_id = ?";
             jdbcTemplate.update(query, product.getName(), product.getProducType().getProductTypeId(), product.getUnit().getUnitId(),
-                    product.getDateAdd(), product.getExpired(), product.getPrice(), product.getCapitalPrice(), product.getStatus(), product.getDescription(), product.getProductId());
+                    product.getDateAdd(), product.getExpired(), product.getQuantity(), product.getPrice(), product.getCapitalPrice(), product.getStatus(), product.getDescription(), product.getProductId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
@@ -82,35 +82,16 @@ public class ProductDao implements IProductDao{
     }
 
     @Override
-    public boolean isExistProdcut(Product product) {
-        List<Product> products = new ArrayList<>();
+    public int isExistProdcut(Product product) {
+        int count = -1;
         try {
-            String query = "SELECT * FROM Product WHERE name = ?";
-            products = jdbcTemplate.query(query, new Object[]{product.getName()}, new RowMapper<Product>() {
-                @Override
-                public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    Product product = new Product();
-                    product.setProductId(rs.getInt("product_id"));
-                    product.setName(rs.getString("name"));
-                    product.setDateAdd(rs.getDate("date_add"));
-                    product.setExpired(rs.getDate("expired"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setCapitalPrice(rs.getDouble("capital_price"));
-                    product.setDescription(rs.getString("description"));
-                    product.setStatus(rs.getString("status"));
-
-                    Unit unit = unitDao.findUnitById(rs.getInt("unit_id"));
-                    product.setUnit(unit);
-
-                    ProductType productType = productTypeDao.findProductTypeById(rs.getInt("productTypeId"));
-                    product.setProducType(productType);
-                    return product;
-                }
-            });
+            String query = "SELECT count(*) FROM Product where name = ?";
+            count = jdbcTemplate.queryForObject(query, new Object[] {product.getName()}, Integer.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return -1;
         }
-        return products.size() > 0;
+        return count;
     }
 
     @Override
@@ -126,6 +107,7 @@ public class ProductDao implements IProductDao{
                     product.setName(rs.getString("name"));
                     product.setDateAdd(rs.getDate("date_add"));
                     product.setExpired(rs.getDate("expired"));
+                    product.setQuantity(rs.getInt("quantity"));
                     product.setPrice(rs.getDouble("price"));
                     product.setCapitalPrice(rs.getDouble("capital_price"));
                     product.setDescription(rs.getString("description"));
@@ -158,6 +140,7 @@ public class ProductDao implements IProductDao{
                 product.setName(rs.getString("name"));
                 product.setDateAdd(rs.getDate("date_add"));
                 product.setExpired(rs.getDate("expired"));
+                product.setQuantity(rs.getInt("quantity"));
                 product.setPrice(rs.getDouble("price"));
                 product.setCapitalPrice(rs.getDouble("capital_price"));
                 product.setDescription(rs.getString("description"));

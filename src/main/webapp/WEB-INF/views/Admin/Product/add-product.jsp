@@ -65,13 +65,17 @@
                         <label for="expired">Ngày hết hạn:</label>
                         <input type="date" class="form-control" id="expired" name="expired">
                     </div>
+                     <div class="form-group">
+                        <label for="quantity">Số lượng:</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" min = "1" value="1">
+                    </div>
                     <div class="form-group">
                         <label for="price">Giá bán:</label>
-                        <input type="number" class="form-control" id="price" name="price">
+                        <input type="number" class="form-control" id="price" name="price" min = "1" value="1">
                     </div>
                     <div class="form-group">
                         <label for="capitalPrice">Giá vốn:</label>
-                        <input type="number" class="form-control" id="capitalPrice" name="capitalPrice">
+                        <input type="number" class="form-control" id="capitalPrice" name="capitalPrice" min="1" value="1">
                     </div>
                     <div class="form-group">
                         <label for="status">Trạng thái:</label>
@@ -94,16 +98,69 @@
     </div>
 
     <script>
+        // Chúng ta đã sử dụng jQuery để bắt sự kiện thay đổi trên trường nhập ngày thêm
+        // Khi người dùng chọn một ngày thêm mới, chúng ta cập nhật thuộc tính min của trường nhập ngày hết hạn
+        // Điều này đảm bảo rằng người dùng không thể chọn một ngày hết hạn trước ngày thêm
+        $(document).ready(function() {
+            // Disable dates before date of addition
+            $('#dateAdd').change(function() {
+                $('#expired').attr('min', $(this).val());
+            });
+        });
+
+         // Lấy ngày hôm nay
+         var today = new Date();
+         var dd = String(today.getDate()).padStart(2, '0');
+         var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+         var yyyy = today.getFullYear();
+         var tomorrow = new Date(today);
+         tomorrow.setDate(tomorrow.getDate() + 1); // Lấy ngày mai
+
+         // Định dạng ngày hôm nay và ngày mai thành chuỗi 'YYYY-MM-DD'
+         today = yyyy + '-' + mm + '-' + dd;
+         tomorrow = tomorrow.getFullYear() + '-' + String(tomorrow.getMonth() + 1).padStart(2, '0') + '-' + String(tomorrow.getDate()).padStart(2, '0');
+
+         // Đặt giá trị mặc định cho các ô nhập ngày thêm và ngày hết hạn
+         $('#dateAdd').val(today);
+         $('#expired').val(tomorrow);
+
         function addProduct() {
            var name = $("#name").val();
            var productTypeId = $("#productType").val();
            var unitId = $("#unit").val();
            var dateAdd = $("#dateAdd").val();
            var expired = $("#expired").val();
+           var quantity = $("#quantity").val();
            var price = $("#price").val();
            var capitalPrice = $("#capitalPrice").val();
            var status = $("#status").val();
            var description = $("#description").val();
+
+           if(name.length == 0) {
+               alert("Vui lòng không để trống");
+               return;
+           }
+
+           if(quantity <= 0) {
+               alert("Số lượng phải lớn hơn 0");
+               return;
+           }
+
+           // Check if price and capital price are non-negative
+           if (price < 0 || capitalPrice < 0) {
+                alert("Giá bán và giá vốn phải là số không âm.");
+                return;
+           }
+           if(price <= capitalPrice) {
+                 alert("Giá bán lớn hơn giá vốn");
+                 return;
+           }
+
+           // Check if expiration date is after date of addition
+           if (dateAdd >= expired) {
+                alert("Ngày hết hạn phải sau ngày thêm.");
+                return;
+            }
 
            // Lấy thông tin đơn vị từ API
            const unitAPI = 'http://localhost:8080/DemoMVC/find-unit/unitId=' + unitId;
@@ -132,6 +189,7 @@
                        "unit": unit,
                        "dateAdd": dateAdd,
                        "expired": expired,
+                       "quantity": quantity,
                        "price": price,
                        "capitalPrice": capitalPrice,
                        "status": status,

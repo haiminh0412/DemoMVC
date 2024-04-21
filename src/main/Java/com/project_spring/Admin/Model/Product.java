@@ -2,13 +2,15 @@ package com.project_spring.Admin.Model;
 
 import java.sql.Date;
 
+
 public class Product {
     private int productId;
-    String name;
+    private String name;
     private ProductType productType;
     private Unit unit;
     private Date dateAdd;
     private Date expired;
+    private int quantity;
     private double price;
     private double capitalPrice;
     private String status;
@@ -24,6 +26,20 @@ public class Product {
         this.unit = unit;
         this.dateAdd = dateAdd;
         this.expired = expired;
+        this.price = price;
+        this.capitalPrice = capitalPrice;
+        this.status = status;
+        this.description = description;
+    }
+
+    public Product(int productId, String name, ProductType productType, Unit unit, Date dateAdd, Date expired, int quantity, double price, double capitalPrice, String status, String description) {
+        this.productId = productId;
+        this.name = name;
+        this.productType = productType;
+        this.unit = unit;
+        this.dateAdd = dateAdd;
+        this.expired = expired;
+        this.quantity = quantity;
         this.price = price;
         this.capitalPrice = capitalPrice;
         this.status = status;
@@ -108,5 +124,21 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

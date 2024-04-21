@@ -14,7 +14,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý khách sạn</title>
+
     <%@ include file="/WEB-INF/views/inc/links.jsp" %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="bg-white">
     <%@ include file="/WEB-INF/views/inc/header.jsp" %>
@@ -49,23 +51,36 @@
                                     <th></th>
                                     </tr>
                                 </thead>
-                                   <c:forEach var="occupiedRoom" items="${occupiedRooms}">
-                                    <tr>
-                                        <td>${occupiedRoom.customer.name}</td>
-                                        <td>${occupiedRoom.customer.phoneNumber}</td>
-                                        <td>${occupiedRoom.room.roomName}</td>
-                                        <td>${occupiedRoom.booking.numberOfPeople}</td>
-                                        <td>${occupiedRoom.booking.checkIn}</td>
-                                        <td>${occupiedRoom.booking.checkOut}</td>
-                                        <th><a href="#" class="btn btn-sm rounded-pill btn-danger"/>Chi tiết</th>
-                                        <th><a href="#" class="btn btn-sm rounded-pill btn-primary"/>Chuyển phòng</th>
-                                        <th><a href="<c:url value='/thanh-toan-phong/bookingId=${occupiedRoom.booking.bookingId}'/>" class="btn btn-sm rounded-pill btn-warning"/>Thanh toán</th>
-                                    </tr>
-                                    </c:forEach>
+                            <tbody id="occupiedBody"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+    <%@ include file="/WEB-INF/views/inc/scripts.jsp" %>
+     <script>
+         $(document).ready(function() {
+             $.ajax({
+                 url: 'http://localhost:8080/DemoMVC/danh-sach-phong-da-co-nguoi-o', // Đảm bảo rằng URL này chính xác và trả về dữ liệu JSON
+                 dataType: 'json',
+                 success: function(data) {
+                     $.each(data, function(index, occupiedRoom) {
+                         var formattedDateCI = new Date(occupiedRoom.booking.checkIn).toLocaleDateString();
+                         var formattedDateCO = new Date(occupiedRoom.booking.checkOut).toLocaleDateString();
+                         var row = '<tr>' +
+                             '<td>' + occupiedRoom.booking.customer.name + '</td>' +
+                             '<td>' + occupiedRoom.booking.customer.phoneNumber + '</td>' +
+                             '<td>' + occupiedRoom.booking.room.roomName + '</td>' +
+                             '<td>' + occupiedRoom.booking.numberOfPeople + '</td>' +
+                             '<td>' + formattedDateCI + '</td>' +
+                             '<td>' + formattedDateCO + '</td>' +
+                             '<td><a href="/DemoMVC/thanh-toan-phong/bookingId=' + occupiedRoom.booking.bookingId + '" class="btn btn-sm rounded-pill btn-warning">Thanh toán</a></td>' +
+                             '</tr>';
+                         $('#occupiedBody').append(row);
+                     });
+                 }
+             });
+         });
+     </script>
     <%@ include file="/WEB-INF/views/inc/scripts.jsp" %>
 </body>
 </html>
